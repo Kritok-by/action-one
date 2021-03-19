@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Item } from './Components/Item';
 
 interface dataType {
@@ -19,7 +19,14 @@ function App() {
   const remove = (id: number) => {
     setData((prev) => prev.filter((i) => i.id !== id));
   };
-  console.log(name);
+
+  useEffect(() => {
+    const data = localStorage.getItem('action-one-table');
+    data && setData(JSON.parse(data));
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('action-one-table', JSON.stringify(data));
+  }, [data]);
 
   const submit = (e: any) => {
     e.preventDefault();
